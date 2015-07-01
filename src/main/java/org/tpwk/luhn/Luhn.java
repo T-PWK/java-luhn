@@ -28,8 +28,10 @@ public class Luhn
 
 	private static char calculateChecksum(final String number)
 	{
-		final char[] digits = new StringBuilder(number).reverse().toString().toCharArray();
+		final char[] digits = number.toCharArray();
 		int sum = 0;
+
+		reverse(digits);
 
 		for (int i = 0; i < digits.length; i++)
 		{
@@ -44,5 +46,19 @@ public class Luhn
 		}
 
 		return (char) ((10 - sum % 10) % 10 + '0'); // 10 - last digit and convert number to a digit character
+	}
+
+	private static void reverse(final char[] array)
+	{
+		int hi = array.length - 1, lo = 0;
+
+		while (hi > lo)
+		{
+			array[lo] = (char) (array[lo] ^ array[hi]);
+			array[hi] = (char) (array[lo] ^ array[hi]);
+			array[lo] = (char) (array[lo] ^ array[hi]);
+			hi--;
+			lo++;
+		}
 	}
 }
